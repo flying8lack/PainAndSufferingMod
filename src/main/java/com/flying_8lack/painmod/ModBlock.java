@@ -16,7 +16,7 @@ import java.util.function.Supplier;
 
 public class ModBlock {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS,
-            BoonMod.MOD_ID);
+            PainMod.MOD_ID);
 
     public static final RegistryObject<Block> HEAL_BLOCK = registerBlock("healblock",
             () -> new healingBlock(BlockBehaviour.Properties.of(Material.SHULKER_SHELL).noOcclusion())

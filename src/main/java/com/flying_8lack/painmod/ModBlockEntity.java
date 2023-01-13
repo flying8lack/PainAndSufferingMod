@@ -10,7 +10,7 @@ import net.minecraftforge.registries.RegistryObject;
 public class ModBlockEntity {
 
     public static DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES =
-            DeferredRegister.create(ForgeRegistries.BLOCK_ENTITIES,BoonMod.MOD_ID);
+            DeferredRegister.create(ForgeRegistries.BLOCK_ENTITIES, PainMod.MOD_ID);
 
     public static final RegistryObject<BlockEntityType<healingBlockEntity>> OG =
             BLOCK_ENTITIES.register("healing_block_entity",

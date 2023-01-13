@@ -17,7 +17,7 @@ import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-@Mod.EventBusSubscriber(modid = BoonMod.MOD_ID)
+@Mod.EventBusSubscriber(modid = PainMod.MOD_ID)
 public class ModWorldEvents {
 
     @SubscribeEvent
@@ -29,7 +29,7 @@ public class ModWorldEvents {
     public static void attachCapabilityToPlayer(AttachCapabilitiesEvent<Entity> event){
         if(event.getObject() instanceof Player){
             if(!event.getObject().getCapability(PainCapabilityProvider.PAIN).isPresent()){
-                event.addCapability(new ResourceLocation(BoonMod.MOD_ID, "properties"),
+                event.addCapability(new ResourceLocation(PainMod.MOD_ID, "properties"),
                         new PainCapabilityProvider());
             }
         }

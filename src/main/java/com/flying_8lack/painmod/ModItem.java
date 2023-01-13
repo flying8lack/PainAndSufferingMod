@@ -10,7 +10,7 @@ import net.minecraftforge.registries.RegistryObject;
 
 public class ModItem {
 
-    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, BoonMod.MOD_ID);
+    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, PainMod.MOD_ID);
 
     public static final RegistryObject<Item> WUMPA = ITEMS.register("wumpa",
             () -> new Item(new Item.Properties().tab(ModCreativeTab.BOON_TAB).food(ModFood.WUMPA)));

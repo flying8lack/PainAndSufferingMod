@@ -1,6 +1,6 @@
 package com.flying_8lack.painmod.network;
 
-import com.flying_8lack.painmod.BoonMod;
+import com.flying_8lack.painmod.PainMod;
 import com.flying_8lack.painmod.network.packet.PointsC2SPacket;
 import com.flying_8lack.painmod.network.packet.PointsS2CPacket;
 import net.minecraft.resources.ResourceLocation;
@@ -20,7 +20,7 @@ public class ModMessages {
 
     public static void register(){
         SimpleChannel net = NetworkRegistry.ChannelBuilder
-                .named(new ResourceLocation(BoonMod.MOD_ID, "messages"))
+                .named(new ResourceLocation(PainMod.MOD_ID, "messages"))
                 .networkProtocolVersion(() -> PROTOCOL_VERSION)
                 .clientAcceptedVersions(s -> true)
                 .serverAcceptedVersions(s -> true)
