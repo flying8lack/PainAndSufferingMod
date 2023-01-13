@@ -20,7 +20,7 @@ public class DarkPickAxeItem extends PickaxeItem {
 
     }
 
-    @Override
+    /*@Override
     public InteractionResultHolder<ItemStack> use(Level pLevel, Player pPlayer, InteractionHand pUsedHand) {
 
 
@@ -36,5 +36,5 @@ public class DarkPickAxeItem extends PickaxeItem {
             }
         }
         return super.use(pLevel, pPlayer, pUsedHand);
-    }
+    }*/
 }
