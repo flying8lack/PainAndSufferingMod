@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "   ",
+    "IBI",
+    "IFI"
+  ],
+  "key": {
+    "B": {
+      "item": "minecraft:brewing_stand"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+      "F": {
+        "item": "minecraft:campfire"
+    }
+
+  },
+  "result": {
+    "item": "painmod:healblock"
+  }
+}

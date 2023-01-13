@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "painmod:block/healblock"
+    },
+    "facing=east": {
+      "model": "painmod:block/healblock", "y":  90
+    },
+    "facing=south": {
+      "model": "painmod:block/healblock", "y": 180
+    },
+    "facing=west": {
+      "model": "painmod:block/healblock", "y": 270
+    }
+  }
+}
