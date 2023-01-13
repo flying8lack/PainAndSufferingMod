@@ -4,10 +4,10 @@ import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 
 public class ModCreativeTab {
-    public static final CreativeModeTab BOON_TAB = new CreativeModeTab("boontab") {
+    public static final CreativeModeTab PAIN_TAB = new CreativeModeTab("paintab") {
         @Override
         public ItemStack makeIcon() {
-            return new ItemStack(ModItem.WUMPA.get());
+            return new ItemStack(ModItem.DARK_INGOT.get());
         }
 
 
