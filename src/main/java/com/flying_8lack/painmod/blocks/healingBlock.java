@@ -75,6 +75,7 @@ public class healingBlock extends BaseEntityBlock {
         //return super.getTicker(pLevel, pState, pBlockEntityType);
     }
 
+
     @Override
     public boolean onDestroyedByPlayer(BlockState state, Level level, BlockPos pos, Player player, boolean willHarvest, FluidState fluid) {
         if(!level.isClientSide()) {

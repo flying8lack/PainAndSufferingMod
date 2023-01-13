@@ -4,15 +4,14 @@ import com.flying_8lack.painmod.util.PainCapability;
 import com.flying_8lack.painmod.util.PainCapabilityProvider;
 import com.flying_8lack.painmod.worldgen.ModFeature;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.event.entity.player.PlayerSleepInBedEvent;
+import net.minecraftforge.event.entity.player.PlayerWakeUpEvent;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -37,12 +36,12 @@ public class ModWorldEvents {
 
 
 
-
     @SubscribeEvent
     public static void onPlayerAttackEntity(AttackEntityEvent event){
-        if(!event.getEntityLiving().getClassification(false).isFriendly()) {
+        if(event.getTarget().isAlive() &&
+                (event.getPlayer().distanceTo(event.getTarget()) <= 8)) {
             event.getPlayer().getCapability(PainCapabilityProvider.PAIN).ifPresent(m -> {
-                m.addPainPoint(1);
+                m.addPainPoint(10);
             });
         }
     }
@@ -67,20 +66,21 @@ public class ModWorldEvents {
         event.register(PainCapability.class);
     }
     @SubscribeEvent
-    public static void onSleepEvent(PlayerSleepInBedEvent event){
+    public static void onSleepEvent(PlayerWakeUpEvent event){
 
 
 
-        int X = (int)Math.floor(event.getPlayer().getLevel().random.nextGaussian() * 6)
+        int X = (int)Math.floor(event.getPlayer().getLevel().random.nextGaussian() * 32)
                 + event.getPlayer().getBlockX();
-        int Z = (int)Math.floor(event.getPlayer().getLevel().random.nextGaussian() * 6)
+        int Z = (int)Math.floor(event.getPlayer().getLevel().random.nextGaussian() * 32)
                 + event.getPlayer().getBlockZ();
-        //int Y = event.getPlayer().getLevel().getHeight(Heightmap.Types.WORLD_SURFACE,
-                //X, Z);
-
-
-        event.getPlayer().getLevel().playLocalSound(X,event.getPlayer().getY(),Z, SoundEvents.AMBIENT_CAVE,
-                SoundSource.MASTER, 6.0f, 0.9f, false);
+        int Y = event.getPlayer().getLevel().getHeight(Heightmap.Types.WORLD_SURFACE,
+                X, Z);
+        //event.getPlayer().getLevel().playLocalSound(X, event.getPlayer().getY(), Z, SoundEvents.ENDERMAN_STARE,
+        //                    SoundSource.MASTER, 6.0f, 0.9f, false);
+        if(event.getPlayer().getLevel().random.nextInt(10) <= 2) {
+            event.getPlayer().teleportTo(X, Y, Z);
+        }
 
 
 
