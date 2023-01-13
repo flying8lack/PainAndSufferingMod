@@ -1,0 +1,22 @@
+{
+
+  "structures": [
+    {
+      "structure": "boonmod:scary_place",
+      "weight": 1
+    }
+  ],
+  "placement": {
+
+    "salt": 1244568899,
+
+
+    "spacing": 16,
+
+
+    "separation": 8,
+
+
+    "type": "minecraft:random_spread"
+  }
+}
