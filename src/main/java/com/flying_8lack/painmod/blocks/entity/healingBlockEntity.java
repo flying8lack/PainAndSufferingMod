@@ -55,8 +55,8 @@ public class healingBlockEntity extends BlockEntity implements IForgeBlockEntity
 
                                 pain.subPainPoint(10);
                                 pain.setHasEffect(true);
-                                pain.setLastEffectCoolDown(140);
-                                i.sendMessage(new TextComponent("Added an effect"), i.getUUID());
+                                pain.setLastEffectCoolDown(120);
+
 
 
                             }
