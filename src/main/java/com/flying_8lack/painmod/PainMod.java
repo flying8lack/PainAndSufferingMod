@@ -1,10 +1,13 @@
 package com.flying_8lack.painmod;
 
 
+import com.flying_8lack.painmod.Entity.Client.ThiefRenderer;
 import com.flying_8lack.painmod.network.ModMessages;
 import com.flying_8lack.painmod.overlay.CustomOverlay;
 import com.flying_8lack.painmod.worldgen.ModStructures;
 import com.mojang.logging.LogUtils;
+import net.minecraft.client.renderer.entity.EntityRenderer;
+import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraftforge.client.gui.OverlayRegistry;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -50,7 +53,7 @@ public class PainMod
     {
         // some preinit code
         LOGGER.info("Let us start some pain and suffering");
-        ModMessages.register();
+        ModMessages.register(); //register networking
 
 
     }
@@ -62,6 +65,7 @@ public class PainMod
         //ItemBlockRenderTypes.setRenderLayer(ModBlock.HEAL_BLOCK.get(),
                 //RenderType.translucent());
         OverlayRegistry.registerOverlayTop("PainPoints",CustomOverlay.POINTS);
+        EntityRenderers.register(ModEntity.THIEF.get(), ThiefRenderer::new);
 
 
 
