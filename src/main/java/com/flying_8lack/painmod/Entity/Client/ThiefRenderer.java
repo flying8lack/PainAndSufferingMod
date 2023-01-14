@@ -26,7 +26,7 @@ public class ThiefRenderer extends GeoEntityRenderer<ThiefEntity> {
 
     @Override
     public RenderType getRenderType(ThiefEntity animatable, float partialTick, PoseStack poseStack, @Nullable MultiBufferSource bufferSource, @Nullable VertexConsumer buffer, int packedLight, ResourceLocation texture) {
-        poseStack.scale(1.0f, 1.0f, 1.0f);
+        //poseStack.scale(1.0f, 1.0f, 1.0f);
         return super.getRenderType(animatable, partialTick, poseStack, bufferSource, buffer, packedLight, texture);
     }
 }

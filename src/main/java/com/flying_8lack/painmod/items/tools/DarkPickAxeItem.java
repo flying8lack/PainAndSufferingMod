@@ -6,7 +6,7 @@ import net.minecraft.world.item.PickaxeItem;
 public class DarkPickAxeItem extends PickaxeItem {
     public DarkPickAxeItem(Properties pProperties) {
         super(ModTier.DARK, 2, 0.2f, pProperties);
-        pProperties.stacksTo(1);
+
 
     }
 

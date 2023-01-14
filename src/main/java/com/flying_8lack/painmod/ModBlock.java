@@ -20,7 +20,7 @@ public class ModBlock {
 
     public static final RegistryObject<Block> HEAL_BLOCK = registerBlock("healblock",
             () -> new healingBlock(BlockBehaviour.Properties.of(Material.SHULKER_SHELL).noOcclusion())
-                    , ModCreativeTab.BOON_TAB);
+                    , ModCreativeTab.PAIN_TAB);
 
 
 

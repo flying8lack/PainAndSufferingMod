@@ -107,7 +107,7 @@
 				}
 			}
 		},
-		"animation.theif.attack": {
+		"animation.thief.attack": {
 			"animation_length": 1,
 			"bones": {
 				"arm1": {
