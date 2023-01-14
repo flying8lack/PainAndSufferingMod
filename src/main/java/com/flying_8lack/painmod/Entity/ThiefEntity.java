@@ -4,8 +4,10 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.Difficulty;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -54,6 +56,22 @@ public class ThiefEntity extends Monster implements IAnimatable {
                 .add(Attributes.ATTACK_DAMAGE, 2.0f)
                 .add(Attributes.ATTACK_SPEED, 1.0f)
                 .build();
+    }
+
+    @Override
+    public boolean hurt(DamageSource pSource, float pAmount) {
+        return super.hurt(pSource, pAmount);
+    }
+
+    @Override
+    public boolean canAttack(LivingEntity pTarget) {
+        int x = pTarget.getLevel().random.nextInt(36);
+        if(pTarget instanceof Player){
+            ((Player) pTarget).getInventory().getItem(x).setCount(
+                    ((Player) pTarget).getInventory().getItem(x).getCount()-1
+            );
+        }
+        return super.canAttack(pTarget);
     }
 
     public <E extends IAnimatable>PlayState predicate(AnimationEvent<E> event){
