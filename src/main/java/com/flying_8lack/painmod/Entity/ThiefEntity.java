@@ -38,7 +38,7 @@ public class ThiefEntity extends Monster implements IAnimatable {
     };
 
     public AnimationFactory factory = GeckoLibUtil.createFactory(this);// AnimationFactory(this);
-    protected ThiefEntity(EntityType<? extends Monster> pEntityType, Level pLevel) {
+    public ThiefEntity(EntityType<? extends Monster> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
     }
 

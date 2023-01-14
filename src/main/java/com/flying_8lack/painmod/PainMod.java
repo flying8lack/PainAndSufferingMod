@@ -32,6 +32,7 @@ public class PainMod
         ModBlock.register(eventbus);
         ModBlockEntity.register(eventbus);
         ModStructures.register(eventbus);
+        ModEntity.register(eventbus);
 
         eventbus.addListener(this::setup);
         eventbus.addListener(this::setupClient);
