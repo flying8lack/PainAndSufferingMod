@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "painmod:item/wumpa"
+    "layer0": "painmod:item/dark_apple"
   }
 }

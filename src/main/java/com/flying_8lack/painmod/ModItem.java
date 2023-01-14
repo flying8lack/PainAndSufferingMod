@@ -15,8 +15,8 @@ public class ModItem {
 
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, PainMod.MOD_ID);
 
-    public static final RegistryObject<Item> WUMPA = ITEMS.register("wumpa",
-            () -> new Item(new Item.Properties().tab(ModCreativeTab.PAIN_TAB).food(ModFood.WUMPA)));
+    public static final RegistryObject<Item> DARK_APPLE = ITEMS.register("dark_apple",
+            () -> new Item(new Item.Properties().tab(ModCreativeTab.PAIN_TAB).food(ModFood.DARK_APPLE)));
 
     public static final RegistryObject<Item> DARK_INGOT = ITEMS.register("dark_ingot",
             () -> new Item(new Item.Properties().tab(ModCreativeTab.PAIN_TAB).stacksTo(64)));
