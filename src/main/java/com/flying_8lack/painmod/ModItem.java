@@ -6,6 +6,7 @@ import com.flying_8lack.painmod.items.loveFangItem;
 import com.flying_8lack.painmod.items.tools.DarkAxeItem;
 import com.flying_8lack.painmod.items.tools.DarkPickAxeItem;
 import net.minecraft.world.item.Item;
+import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -42,6 +43,10 @@ public class ModItem {
 
     public static final RegistryObject<Item> HATE_FANG = ITEMS.register("hate_fang",
             () -> new hateFangItem(new Item.Properties().tab(ModCreativeTab.PAIN_TAB)));
+
+    public static final RegistryObject<Item> THIEF_SPAWN_EGG = ITEMS.register("theif_spawn_egg",
+            () -> new ForgeSpawnEggItem(ModEntity.THIEF,0xe3e3e3, 0x030303,
+                    new Item.Properties().tab(ModCreativeTab.PAIN_TAB)));
 
     public static void register(IEventBus eventbus){
         ITEMS.register(eventbus);
