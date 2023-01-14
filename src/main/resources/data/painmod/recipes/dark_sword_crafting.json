@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " I ",
+    " I ",
+    " S "
+  ],
+  "key": {
+    "I": {
+      "item": "painmod:dark_ingot"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    }
+
+
+  },
+  "result": {
+    "item": "painmod:dark_sword"
+  }
+}

@@ -32,6 +32,10 @@ public class ModItem {
             () -> new DarkPickAxeItem(
                     new Item.Properties().tab(ModCreativeTab.PAIN_TAB)));
 
+    public static final RegistryObject<Item> DARK_SWORD = ITEMS.register("dark_sword",
+            () -> new DarkPickAxeItem(
+                    new Item.Properties().tab(ModCreativeTab.PAIN_TAB)));
+
 
     public static final RegistryObject<Item> LOVE_FANG = ITEMS.register("love_fang",
             () -> new loveFangItem(new Item.Properties().tab(ModCreativeTab.PAIN_TAB)));
