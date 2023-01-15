@@ -17,12 +17,15 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.animal.Cow;
 import net.minecraft.world.entity.animal.IronGolem;
 import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.common.capabilities.Capability;
@@ -76,14 +79,22 @@ public class ThiefEntity extends Monster implements IAnimatable {
 
         super.addAdditionalSaveData(pCompound);
     }
-
     @Override
-    protected void dropFromLootTable(DamageSource pDamageSource, boolean pAttackedRecently) {
-        this.getCapability(ThiefCapabilityProvider.THIEF).ifPresent(m -> {
-            this.spawnAtLocation(m.giveItemBack());
-        });
-        super.dropFromLootTable(pDamageSource, pAttackedRecently);
+    protected void dropCustomDeathLoot(DamageSource pSource, int pLooting, boolean pRecentlyHit) {
+        super.dropCustomDeathLoot(pSource, pLooting, pRecentlyHit);
+        Entity entity = pSource.getEntity();
+        if (entity instanceof Player) {
+            this.getCapability(ThiefCapabilityProvider.THIEF).ifPresent(m -> {
+                this.spawnAtLocation(m.giveItemBack());
+            });
+
+
+
+        }
+
     }
+
+
 
 
 
@@ -97,7 +108,7 @@ public class ThiefEntity extends Monster implements IAnimatable {
 
             if(pEntity instanceof Player && m.getItem().isEmpty()){
 
-                if(m.stealItem(((Player) pEntity).getItemInHand(InteractionHand.MAIN_HAND))){
+                if(m.stealItem(((Player) pEntity).getItemInHand(InteractionHand.MAIN_HAND).copy())){
                     ((Player) pEntity).getItemInHand(InteractionHand.MAIN_HAND).setCount(0);
                     ((Player) pEntity).sendMessage(new TextComponent("I took your item"),
                             ((Player) pEntity).getUUID());
@@ -121,11 +132,7 @@ public class ThiefEntity extends Monster implements IAnimatable {
 
 
 
-    @Override
-    public boolean canAttack(LivingEntity pTarget) {
 
-        return super.canAttack(pTarget);
-    }
 
     public <E extends IAnimatable>PlayState predicate(AnimationEvent<E> event){
         if(event.isMoving()){

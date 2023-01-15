@@ -5,7 +5,7 @@ import net.minecraft.world.item.ItemStack;
 
 public class ThiefCapability {
 
-    private static ItemStack stolenItem = ItemStack.EMPTY;
+    private ItemStack stolenItem = ItemStack.EMPTY;
 
     public void setItem(CompoundTag nbt){
         this.stolenItem.deserializeNBT(nbt);
