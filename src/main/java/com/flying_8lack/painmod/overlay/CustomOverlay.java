@@ -9,6 +9,8 @@ public class CustomOverlay {
 
 
 
+
+
     public static final IIngameOverlay POINTS = ((gui, poseStack, partialTick, width, height) -> {
         ModMessages.sendToServer(new PointsC2SPacket());
         String display = String.format("Pain Points: %d",

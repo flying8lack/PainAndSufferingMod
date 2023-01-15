@@ -1,9 +1,14 @@
 package com.flying_8lack.painmod.Entity;
 
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.Difficulty;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -39,7 +44,15 @@ import java.util.function.Predicate;
 
 public class ThiefEntity extends Monster implements IAnimatable {
 
+    private static final EntityDataAccessor<ItemStack> HELD_ITEM =
+            SynchedEntityData.defineId(ThiefEntity.class, EntityDataSerializers.ITEM_STACK);
+
+    //public static CompoundTag StolenItem = new Comp
+
+
+
     private static final Predicate<Difficulty> DOOR_BREAKING_PREDICATE = (b) -> {
+
         return true;
     };
 
@@ -58,19 +71,59 @@ public class ThiefEntity extends Monster implements IAnimatable {
                 .build();
     }
 
+    public void onSyncedDataUpdated(EntityDataAccessor<?> pKey) {
+        if (HELD_ITEM.equals(pKey)) {
+            this.refreshDimensions();
+        }
+
+        super.onSyncedDataUpdated(pKey);
+    }
+
+    @Override
+    public void addAdditionalSaveData(CompoundTag pCompound) {
+        super.addAdditionalSaveData(pCompound);
+    }
+
+    @Override
+    protected void dropCustomDeathLoot(DamageSource pSource, int pLooting, boolean pRecentlyHit) {
+        super.dropCustomDeathLoot(pSource, pLooting, pRecentlyHit);
+        this.spawnAtLocation(this.entityData.get(this.HELD_ITEM));
+    }
+
+    @Override
+    public boolean doHurtTarget(Entity pEntity) {
+        boolean flag = super.doHurtTarget(pEntity);
+
+        if(flag){
+            if(pEntity instanceof Player && this.getEntityData().get(this.HELD_ITEM).isEmpty()){
+
+                this.entityData.set(this.HELD_ITEM,
+                        ((Player) pEntity).getItemInHand(InteractionHand.MAIN_HAND));
+
+                ((Player) pEntity).getItemInHand(InteractionHand.MAIN_HAND).setCount(0);
+
+
+
+            }
+        }
+        return flag;
+    }
+
+    @Override
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        this.getEntityData().define(HELD_ITEM, ItemStack.EMPTY);
+    }
+
     @Override
     public boolean hurt(DamageSource pSource, float pAmount) {
         return super.hurt(pSource, pAmount);
     }
 
+
     @Override
     public boolean canAttack(LivingEntity pTarget) {
-        int x = pTarget.getLevel().random.nextInt(36);
-        if(pTarget instanceof Player){
-            ((Player) pTarget).getInventory().getItem(x).setCount(
-                    ((Player) pTarget).getInventory().getItem(x).getCount()-1
-            );
-        }
+
         return super.canAttack(pTarget);
     }
 
@@ -92,8 +145,9 @@ public class ThiefEntity extends Monster implements IAnimatable {
     }
 
     protected void registerGoals(){
+
         this.goalSelector.addGoal(1, new FloatGoal(this));
-        this.goalSelector.addGoal(2,new LookAtPlayerGoal(this, Player.class, 6));
+        this.goalSelector.addGoal(2,new LookAtPlayerGoal(this, Player.class, 6, 1.0f));
         this.goalSelector.addGoal(3, new BreakDoorGoal(this,20,DOOR_BREAKING_PREDICATE));
         this.goalSelector.addGoal(4, new MeleeAttackGoal(this, 1.1f, true));
         this.goalSelector.addGoal(5, new AvoidEntityGoal<>(this,
