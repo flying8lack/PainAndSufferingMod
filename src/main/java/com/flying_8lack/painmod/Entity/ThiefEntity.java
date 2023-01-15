@@ -2,6 +2,7 @@ package com.flying_8lack.painmod.Entity;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -19,7 +20,9 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.animal.IronGolem;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -44,7 +47,7 @@ import java.util.function.Predicate;
 
 public class ThiefEntity extends Monster implements IAnimatable {
 
-    private static final EntityDataAccessor<ItemStack> HELD_ITEM =
+    public static final EntityDataAccessor<ItemStack> HELD_ITEM =
             SynchedEntityData.defineId(ThiefEntity.class, EntityDataSerializers.ITEM_STACK);
 
     //public static CompoundTag StolenItem = new Comp
@@ -81,13 +84,21 @@ public class ThiefEntity extends Monster implements IAnimatable {
 
     @Override
     public void addAdditionalSaveData(CompoundTag pCompound) {
+
         super.addAdditionalSaveData(pCompound);
     }
 
+
     @Override
     protected void dropCustomDeathLoot(DamageSource pSource, int pLooting, boolean pRecentlyHit) {
+        if(!pSource.getEntity().getLevel().isClientSide()) {
+            ItemStack item = this.entityData.get(this.HELD_ITEM);
+            ItemEntity en = new ItemEntity(pSource.getEntity().getLevel(),
+                    pSource.getEntity().getX(), pSource.getEntity().getY() + 1,
+                    pSource.getEntity().getZ(), item);
+            pSource.getEntity().getLevel().addFreshEntity(en);
+        }
         super.dropCustomDeathLoot(pSource, pLooting, pRecentlyHit);
-        this.spawnAtLocation(this.entityData.get(this.HELD_ITEM));
     }
 
     @Override
@@ -95,12 +106,14 @@ public class ThiefEntity extends Monster implements IAnimatable {
         boolean flag = super.doHurtTarget(pEntity);
 
         if(flag){
-            if(pEntity instanceof Player && this.getEntityData().get(this.HELD_ITEM).isEmpty()){
+            if(pEntity instanceof Player && !this.getEntityData().get(this.HELD_ITEM).isEmpty()){
 
-                this.entityData.set(this.HELD_ITEM,
+                this.entityData.define(this.HELD_ITEM,
                         ((Player) pEntity).getItemInHand(InteractionHand.MAIN_HAND));
 
                 ((Player) pEntity).getItemInHand(InteractionHand.MAIN_HAND).setCount(0);
+                ((Player) pEntity).sendMessage(new TextComponent("I took your item"),
+                        ((Player) pEntity).getUUID());
 
 
 
@@ -119,6 +132,8 @@ public class ThiefEntity extends Monster implements IAnimatable {
     public boolean hurt(DamageSource pSource, float pAmount) {
         return super.hurt(pSource, pAmount);
     }
+
+
 
 
     @Override
@@ -144,14 +159,18 @@ public class ThiefEntity extends Monster implements IAnimatable {
                 0, this::predicate));
     }
 
+
+
     protected void registerGoals(){
 
         this.goalSelector.addGoal(1, new FloatGoal(this));
-        this.goalSelector.addGoal(2,new LookAtPlayerGoal(this, Player.class, 6, 1.0f));
-        this.goalSelector.addGoal(3, new BreakDoorGoal(this,20,DOOR_BREAKING_PREDICATE));
-        this.goalSelector.addGoal(4, new MeleeAttackGoal(this, 1.1f, true));
-        this.goalSelector.addGoal(5, new AvoidEntityGoal<>(this,
-                IronGolem.class,20,1.0f,1.2f));
+        this.goalSelector.addGoal(2, new AvoidEntityGoal<>(this,
+                IronGolem.class,20,1.5f,2.0f));
+        this.goalSelector.addGoal(3, new MeleeAttackGoal(this, 1.1f, true));
+        this.goalSelector.addGoal(4,new LookAtPlayerGoal(this, Player.class, 6, 1.0f));
+        this.goalSelector.addGoal(5, new BreakDoorGoal(this,20,DOOR_BREAKING_PREDICATE));
+
+
 
         this.goalSelector.addGoal(6, new RandomLookAroundGoal(this));
         //this.goalSelector.addGoal(2,new NearestAttackableTargetGoal<>(this, Player.class, 6));

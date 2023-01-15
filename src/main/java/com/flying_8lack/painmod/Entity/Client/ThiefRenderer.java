@@ -20,13 +20,19 @@ public class ThiefRenderer extends GeoEntityRenderer<ThiefEntity> {
 
     @Override
     public ResourceLocation getTextureLocation(ThiefEntity animatable) {
+        /*if(!animatable.getEntityData().get(animatable.HELD_ITEM).isEmpty()){
+
+        }*/
         return new ResourceLocation(PainMod.MOD_ID, "textures/entity/thief.png");
 
     }
 
+
+
     @Override
     public RenderType getRenderType(ThiefEntity animatable, float partialTick, PoseStack poseStack, @Nullable MultiBufferSource bufferSource, @Nullable VertexConsumer buffer, int packedLight, ResourceLocation texture) {
         //poseStack.scale(1.0f, 1.0f, 1.0f);
+
         return super.getRenderType(animatable, partialTick, poseStack, bufferSource, buffer, packedLight, texture);
     }
 }
