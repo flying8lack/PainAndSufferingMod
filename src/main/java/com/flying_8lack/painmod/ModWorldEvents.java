@@ -1,10 +1,13 @@
 package com.flying_8lack.painmod;
 
+import com.flying_8lack.painmod.Entity.ThiefEntity;
 import com.flying_8lack.painmod.util.PainCapability;
 import com.flying_8lack.painmod.util.PainCapabilityProvider;
+import com.flying_8lack.painmod.util.ThiefCapabilityProvider;
 import com.flying_8lack.painmod.worldgen.ModFeature;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
@@ -25,13 +28,20 @@ public class ModWorldEvents {
     }
 
     @SubscribeEvent
-    public static void attachCapabilityToPlayer(AttachCapabilitiesEvent<Entity> event){
+    public static void attachCapabilityToEntity(AttachCapabilitiesEvent<Entity> event){
         if(event.getObject() instanceof Player){
             if(!event.getObject().getCapability(PainCapabilityProvider.PAIN).isPresent()){
                 event.addCapability(new ResourceLocation(PainMod.MOD_ID, "properties"),
                         new PainCapabilityProvider());
             }
+        } else if(event.getObject() instanceof ThiefEntity){
+            if(!event.getObject().getCapability(ThiefCapabilityProvider.THIEF).isPresent()){
+                event.addCapability(new ResourceLocation(PainMod.MOD_ID, "properties"),
+                        new ThiefCapabilityProvider());
+            }
         }
+
+
     }
 
 
