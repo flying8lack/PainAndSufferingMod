@@ -63,22 +63,7 @@ public class ModWorldEvents {
     }
 
 
-    @SubscribeEvent
-    public static void onEntityDeath(LivingDeathEvent event){
-        if(event.getEntity() instanceof ThiefEntity){
 
-            event.getEntity().getCapability(ThiefCapabilityProvider.THIEF).ifPresent(m -> {
-                /*event.getEntity().getLevel().addFreshEntity(new ItemEntity(
-                        event.getEntity().getLevel(),
-                        event.getEntity().getX(),
-                        event.getEntity().getY(),
-                        event.getEntity().getZ(),
-                        m.giveItemBack()
-                        ));*/
-                PainMod.LOGGER.info(">>>ITEM: "+m.giveItemBack().getItem().toString());
-            });
-        }
-    }
 
 
 
