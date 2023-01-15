@@ -21,9 +21,12 @@ public class ThiefCapability {
         }
     }
 
+
     public ItemStack giveItemBack(){
         if(!this.stolenItem.isEmpty()){
-            return this.stolenItem;
+            ItemStack i = this.getItem();
+            this.stealItem(ItemStack.EMPTY);
+            return i;
         }
 
         return ItemStack.EMPTY;
