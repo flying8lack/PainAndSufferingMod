@@ -96,11 +96,13 @@ public class ThiefEntity extends Monster implements IAnimatable {
 
             if(pEntity instanceof Player && m.getItem().isEmpty()){
 
-                m.stealItem(((Player) pEntity).getItemInHand(InteractionHand.MAIN_HAND));
+                if(m.stealItem(((Player) pEntity).getItemInHand(InteractionHand.MAIN_HAND))){
+                    ((Player) pEntity).getItemInHand(InteractionHand.MAIN_HAND).setCount(0);
+                    ((Player) pEntity).sendMessage(new TextComponent("I took your item"),
+                            ((Player) pEntity).getUUID());
+                }
 
-                ((Player) pEntity).getItemInHand(InteractionHand.MAIN_HAND).setCount(0);
-                ((Player) pEntity).sendMessage(new TextComponent("I took your item"),
-                        ((Player) pEntity).getUUID());
+
 
 
 

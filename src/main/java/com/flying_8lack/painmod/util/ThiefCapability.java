@@ -15,15 +15,18 @@ public class ThiefCapability {
         return this.stolenItem;
     }
 
-    public void stealItem(ItemStack item){
-        if(this.stolenItem.isEmpty()){
+    public boolean stealItem(ItemStack item){
+        if(this.stolenItem == ItemStack.EMPTY){
             this.stolenItem = item;
+            return true;
         }
+
+        return false;
     }
 
 
     public ItemStack giveItemBack(){
-        if(!this.stolenItem.isEmpty()){
+        if(!(this.stolenItem == ItemStack.EMPTY)){
             ItemStack i = this.getItem();
             this.stealItem(ItemStack.EMPTY);
             return i;
