@@ -7,11 +7,13 @@ import com.flying_8lack.painmod.util.ThiefCapabilityProvider;
 import com.flying_8lack.painmod.worldgen.ModFeature;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerWakeUpEvent;
@@ -52,6 +54,20 @@ public class ModWorldEvents {
                 (event.getPlayer().distanceTo(event.getTarget()) <= 8)) {
             event.getPlayer().getCapability(PainCapabilityProvider.PAIN).ifPresent(m -> {
                 m.addPainPoint(10);
+            });
+        }
+    }
+    @SubscribeEvent
+    public static void onEntityDeath(LivingDeathEvent event){
+        if(event.getEntity() instanceof ThiefEntity){
+            event.getEntity().getCapability(ThiefCapabilityProvider.THIEF).ifPresent(m -> {
+                event.getEntity().getLevel().addFreshEntity(new ItemEntity(
+                        event.getEntity().getLevel(),
+                        event.getEntity().getX(),
+                        event.getEntity().getY(),
+                        event.getEntity().getZ(),
+                        m.giveItemBack()
+                        ));
             });
         }
     }

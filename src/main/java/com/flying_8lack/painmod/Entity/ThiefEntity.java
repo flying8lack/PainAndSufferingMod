@@ -3,6 +3,7 @@ package com.flying_8lack.painmod.Entity;
 import com.flying_8lack.painmod.util.ThiefCapabilityProvider;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.TextComponent;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.Difficulty;
@@ -17,6 +18,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.animal.IronGolem;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.player.Player;
@@ -38,6 +40,7 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
+import java.util.Collection;
 import java.util.function.Predicate;
 
 public class ThiefEntity extends Monster implements IAnimatable {
@@ -74,17 +77,15 @@ public class ThiefEntity extends Monster implements IAnimatable {
         super.addAdditionalSaveData(pCompound);
     }
 
-
     @Override
-    protected void dropCustomDeathLoot(DamageSource pSource, int pLooting, boolean pRecentlyHit) {
-        if(!pSource.getEntity().getLevel().isClientSide()) {
-            this.getCapability(ThiefCapabilityProvider.THIEF).ifPresent(m -> {
-                this.spawnAtLocation(m.giveItemBack());
-            });
-
-        }
-        super.dropCustomDeathLoot(pSource, pLooting, pRecentlyHit);
+    protected void dropFromLootTable(DamageSource pDamageSource, boolean pAttackedRecently) {
+        this.getCapability(ThiefCapabilityProvider.THIEF).ifPresent(m -> {
+            this.spawnAtLocation(m.giveItemBack());
+        });
+        super.dropFromLootTable(pDamageSource, pAttackedRecently);
     }
+
+
 
     @Override
     public boolean doHurtTarget(Entity pEntity) {
