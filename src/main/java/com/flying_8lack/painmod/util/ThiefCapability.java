@@ -6,6 +6,15 @@ import net.minecraft.world.item.ItemStack;
 public class ThiefCapability {
 
     private ItemStack stolenItem = ItemStack.EMPTY;
+    private boolean AttackAnime = false;
+
+    public boolean getAttackAnime(){
+        return this.AttackAnime;
+    }
+
+    public void setAttackAnime(boolean state){
+        this.AttackAnime = state;
+    }
 
     public void setItem(CompoundTag nbt){
         this.stolenItem.deserializeNBT(nbt);
