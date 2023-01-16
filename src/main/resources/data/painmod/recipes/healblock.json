@@ -2,15 +2,15 @@
   "type": "minecraft:crafting_shaped",
   "pattern": [
     "   ",
-    "IBI",
+    " B ",
     "IFI"
   ],
   "key": {
     "B": {
-      "item": "minecraft:brewing_stand"
+      "item": "minecraft:white_stained_glass"
     },
     "I": {
-      "item": "minecraft:iron_ingot"
+      "item": "minecraft:minecraft:stick"
     },
       "F": {
         "item": "minecraft:campfire"
