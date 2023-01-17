@@ -203,10 +203,7 @@ public class ThiefEntity extends Monster implements IAnimatable {
 
     }
 
-    public boolean canBreakDoors() {
 
-        return true;
-    }
 
     @Override
     public AnimationFactory getFactory() {
