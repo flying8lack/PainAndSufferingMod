@@ -5,6 +5,7 @@ import com.flying_8lack.painmod.items.hateFangItem;
 import com.flying_8lack.painmod.items.loveFangItem;
 import com.flying_8lack.painmod.items.tools.DarkAxeItem;
 import com.flying_8lack.painmod.items.tools.DarkPickAxeItem;
+import com.flying_8lack.painmod.items.tools.DarkSwordItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.common.ForgeSpawnEggItem;
@@ -35,7 +36,7 @@ public class ModItem {
                     new Item.Properties().tab(ModCreativeTab.PAIN_TAB)));
 
     public static final RegistryObject<Item> DARK_SWORD = ITEMS.register("dark_sword",
-            () -> new DarkPickAxeItem(
+            () -> new DarkSwordItem(
                     new Item.Properties().tab(ModCreativeTab.PAIN_TAB)));
 
 

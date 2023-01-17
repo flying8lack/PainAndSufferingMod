@@ -25,10 +25,13 @@ import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 
 public class ModFeature {
+
+
     public static final Holder<ConfiguredFeature<TreeConfiguration, ?>> HEROBRINE_TREE =
             FeatureUtils.register("herobrine_tree",
             Feature.TREE, new TreeConfiguration.TreeConfigurationBuilder(
@@ -71,7 +74,7 @@ public class ModFeature {
 
 
     public static void generateTrees(final BiomeLoadingEvent event){
-        ResourceKey<Biome> key = ResourceKey.create(Registry.BIOME_REGISTRY, event.getName());
+        ResourceKey<Biome> key = ResourceKey.create(Registry.BIOME_REGISTRY, Objects.requireNonNull(event.getName()));
         Set<BiomeDictionary.Type> type = BiomeDictionary.getTypes(key);
 
         if(type.contains(BiomeDictionary.Type.PLAINS) ||
