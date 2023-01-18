@@ -8,6 +8,8 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
@@ -21,6 +23,7 @@ import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
@@ -49,12 +52,28 @@ public class ThiefEntity extends Monster implements IAnimatable {
     //private static final EntityDataAccessor<Boolean> HURT = SynchedEntityData
     //.defineId(ThiefEntity.class, EntityDataSerializers.BOOLEAN);
 
+    AvoidEntityGoal<Player> avoidGoal = new AvoidEntityGoal<>(this, Player.class, 20, 2.0f, 4.0f);
 
 
-    private static final Predicate<Difficulty> DOOR_BREAKING_PREDICATE = (b) -> {
+    @Override
+    public void aiStep() {
 
-        return true;
-    };
+        super.aiStep();
+        this.getCapability(ThiefCapabilityProvider.THIEF).ifPresent(m ->{
+            if(m.getItem() != ItemStack.EMPTY && !m.check()){
+
+                int rand = this.getLevel().getRandom().nextInt(12);
+                this.goalSelector.addGoal(2, avoidGoal);
+                m.doneCheck();
+                this.teleportTo(this.getBlockX() + rand,
+                        this.getLevel().getHeight(Heightmap.Types.WORLD_SURFACE,this.getBlockX() + rand, this.getBlockZ() + rand),
+                        this.getBlockZ() + rand);
+                this.addEffect(new MobEffectInstance(MobEffects.GLOWING, 100, 1));
+            }
+        });
+    }
+
+    private static final Predicate<Difficulty> DOOR_BREAKING_PREDICATE = (b) -> true;
 
     public AnimationFactory factory = GeckoLibUtil.createFactory(this);// AnimationFactory(this);
     public ThiefEntity(EntityType<? extends Monster> pEntityType, Level pLevel) {
@@ -106,9 +125,10 @@ public class ThiefEntity extends Monster implements IAnimatable {
 
         if(flag){
 
+
             this.getCapability(ThiefCapabilityProvider.THIEF).ifPresent(m ->{
 
-            m.setAttackAnime(true);
+
 
             if(pEntity instanceof Player && m.getItem().isEmpty()){
 
@@ -182,14 +202,14 @@ public class ThiefEntity extends Monster implements IAnimatable {
 
         this.goalSelector.addGoal(1, new FloatGoal(this));
         this.goalSelector.addGoal(2, new AvoidEntityGoal<>(this,
-                IronGolem.class,20,1.5f,2.0f));
+                IronGolem.class,20,1.5f,4.0f));
         this.goalSelector.addGoal(3, new BreakDoorGoal(this,20,DOOR_BREAKING_PREDICATE));
         this.goalSelector.addGoal(4, new MeleeAttackGoal(this, 1.1f, true));
         this.goalSelector.addGoal(5,new LookAtPlayerGoal(this, Player.class, 6, 1.0f));
 
 
 
-
+        this.goalSelector.addGoal(6, new StrollThroughVillageGoal(this, 2));
         this.goalSelector.addGoal(6, new RandomLookAroundGoal(this));
         //this.goalSelector.addGoal(2,new NearestAttackableTargetGoal<>(this, Player.class, 6));
         this.goalSelector.addGoal(7, new WaterAvoidingRandomStrollGoal(this,1.0D));

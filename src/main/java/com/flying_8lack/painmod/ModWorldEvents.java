@@ -8,11 +8,13 @@ import com.flying_8lack.painmod.util.ThiefCapabilityProvider;
 import com.flying_8lack.painmod.worldgen.ModFeature;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.monster.Skeleton;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraftforge.client.event.sound.PlaySoundEvent;
 import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
@@ -25,6 +27,22 @@ import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(modid = PainMod.MOD_ID)
 public class ModWorldEvents {
+
+
+
+    @SubscribeEvent
+    public static void wakeUPEvent(PlayerWakeUpEvent event){
+        if(!event.getPlayer().getLevel().isClientSide() &&
+        event.getPlayer().getLevel().getRandom().nextInt(10) < 2){
+            ThiefEntity e = new ThiefEntity(ModEntity.THIEF.get(),event.getPlayer().getLevel());
+            e.teleportTo(event.getPlayer().getX(),
+                    event.getPlayer().getY(),
+                    event.getPlayer().getZ());
+            event.getPlayer().getLevel().addFreshEntity(e);
+
+
+        }
+    }
 
     @SubscribeEvent
     public static void generateTrees(final BiomeLoadingEvent event){

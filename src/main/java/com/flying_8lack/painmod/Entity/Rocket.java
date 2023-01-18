@@ -19,6 +19,7 @@ public class Rocket extends Arrow {
     private final int max_time = 20*8;
     private int life_time = 0;
     private final float SPEED = 2.0f;
+    private float current_speed = SPEED;
     public Rocket(Level pLevel, double pX, double pY, double pZ, BlockPos Target) {
         super(pLevel, pX, pY, pZ);
         this.pos = Target;
@@ -48,26 +49,29 @@ public class Rocket extends Arrow {
     @Override
     public void tick() {
         //super.tick();
-        this.tickDespawn();
+
+
 
         Vec3 direction = new Vec3(this.getX() - this.pos.getX(),
                 this.getY() - this.pos.getY(),
-                this.getZ() - this.pos.getZ()).normalize();
+                this.getZ() - this.pos.getZ()).normalize().reverse();
         double HorzDist = direction.horizontalDistance();
         float roty = (float)(Mth.atan2(direction.y, HorzDist) * 180.0/Mth.PI);
         float rotx = (float)(Mth.atan2(direction.x,
                 direction.z) * 180.0/Mth.PI);
 
-        if(direction == Vec3.ZERO){
-            Explode();
-            return;
-        }
-        this.setRot(roty, rotx);
-        this.setDeltaMovement(direction.scale(this.SPEED));
 
-        if(!this.isNoGravity()){
-            this.setDeltaMovement(this.getDeltaMovement().add(0, -0.98, 0));
-        }
+        current_speed *= 0.995; //reduce the speed by 5% every tick
+
+
+        this.setRot(roty, rotx);
+        this.setDeltaMovement(direction.scale(this.current_speed));
+
+        /*if(!this.isNoGravity()){
+            this.setDeltaMovement(this.getDeltaMovement().add(0, -0.2/20, 0));
+        }*/
+
+        this.tickDespawn();
 
     }
 
@@ -77,6 +81,7 @@ public class Rocket extends Arrow {
     protected void onHitBlock(BlockHitResult pResult) {
         //super.onHitBlock(pResult);
         if(!this.level.isClientSide()){
+
             Explode();
 
         }
@@ -85,9 +90,10 @@ public class Rocket extends Arrow {
     @Override
     protected void onHitEntity(EntityHitResult pResult) {
         if(!this.level.isClientSide()){
+
             Explode();
 
         }
-        super.onHitEntity(pResult);
+        //super.onHitEntity(pResult);
     }
 }
