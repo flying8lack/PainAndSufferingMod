@@ -1,4 +1,4 @@
-package com.flying_8lack.painmod.util;
+package com.flying_8lack.painmod.util.capabilities;
 
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -7,47 +7,52 @@ import net.minecraftforge.common.util.LazyOptional;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class PainCapabilityProvider implements ICapabilityProvider,
+public class ThiefCapabilityProvider implements ICapabilityProvider,
         ICapabilitySerializable<CompoundTag> {
-    public static Capability<PainCapability> PAIN = CapabilityManager.get(
-            new CapabilityToken<PainCapability>() {});
 
-    private PainCapability PainCap = null;
-    private final LazyOptional<PainCapability> optional = LazyOptional.of(this::CreatePainPoint);
+    public static Capability<ThiefCapability> THIEF = CapabilityManager.get(
+            new CapabilityToken<ThiefCapability>() {});
 
-    public PainCapability CreatePainPoint(){
-        if(PainCap == null){
-            PainCap = new PainCapability();
+    private ThiefCapability thiefSystem = null;
+
+    private final LazyOptional<ThiefCapability> optional = LazyOptional.of(this::CreateThiefSystem);
+
+    private ThiefCapability CreateThiefSystem() {
+        if(this.thiefSystem == null){
+            this.thiefSystem = new ThiefCapability();
         }
 
-        return this.PainCap;
+        return thiefSystem;
     }
+
     @NotNull
     @Override
     public <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
-        if(cap == this.PAIN){
+        if(cap == this.THIEF){
             return optional.cast();
         }
-        return LazyOptional.empty();
+
+        return optional.empty();
     }
 
     @NotNull
     @Override
     public <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap) {
-        if(cap == this.PAIN){
+        if(cap == this.THIEF){
             return optional.cast();
         }
-        return LazyOptional.empty();
+
+        return optional.empty();
     }
 
     @Override
     public CompoundTag serializeNBT() {
         CompoundTag nbt = new CompoundTag();
-        return CreatePainPoint().saveNBTData(nbt);
+        return this.CreateThiefSystem().saveNBTData(nbt);
     }
 
     @Override
     public void deserializeNBT(CompoundTag nbt) {
-        CreatePainPoint().loadNBTData(nbt);
+        this.CreateThiefSystem().loadNBTData(nbt);
     }
 }

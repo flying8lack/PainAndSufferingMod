@@ -1,4 +1,4 @@
-package com.flying_8lack.painmod.util;
+package com.flying_8lack.painmod.util.capabilities;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;

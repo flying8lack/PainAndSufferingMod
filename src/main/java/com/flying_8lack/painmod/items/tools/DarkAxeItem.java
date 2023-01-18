@@ -1,6 +1,6 @@
 package com.flying_8lack.painmod.items.tools;
 
-import com.flying_8lack.painmod.util.PainCapabilityProvider;
+import com.flying_8lack.painmod.util.capabilities.PainCapabilityProvider;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;

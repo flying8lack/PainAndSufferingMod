@@ -1,23 +1,17 @@
 package com.flying_8lack.painmod;
 
 import com.flying_8lack.painmod.Entity.ThiefEntity;
-import com.flying_8lack.painmod.util.PainCapability;
-import com.flying_8lack.painmod.util.PainCapabilityProvider;
-import com.flying_8lack.painmod.util.ThiefCapability;
-import com.flying_8lack.painmod.util.ThiefCapabilityProvider;
+import com.flying_8lack.painmod.util.capabilities.PainCapability;
+import com.flying_8lack.painmod.util.capabilities.PainCapabilityProvider;
+import com.flying_8lack.painmod.util.capabilities.ThiefCapability;
+import com.flying_8lack.painmod.util.capabilities.ThiefCapabilityProvider;
 import com.flying_8lack.painmod.worldgen.ModFeature;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.item.ItemEntity;
-import net.minecraft.world.entity.monster.Monster;
-import net.minecraft.world.entity.monster.Skeleton;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.levelgen.Heightmap;
-import net.minecraftforge.client.event.sound.PlaySoundEvent;
 import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
-import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerWakeUpEvent;

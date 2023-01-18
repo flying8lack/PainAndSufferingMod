@@ -1,4 +1,4 @@
-package com.flying_8lack.painmod.util;
+package com.flying_8lack.painmod.util.capabilities;
 
 public interface IPainCapability {
 

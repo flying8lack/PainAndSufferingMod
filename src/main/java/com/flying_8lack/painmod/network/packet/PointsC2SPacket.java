@@ -1,7 +1,7 @@
 package com.flying_8lack.painmod.network.packet;
 
 import com.flying_8lack.painmod.network.ModMessages;
-import com.flying_8lack.painmod.util.PainCapabilityProvider;
+import com.flying_8lack.painmod.util.capabilities.PainCapabilityProvider;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkEvent;
