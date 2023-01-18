@@ -1,5 +1,6 @@
 package com.flying_8lack.painmod;
 
+import com.flying_8lack.painmod.Entity.Rocket;
 import com.flying_8lack.painmod.Entity.ThiefEntity;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
@@ -20,6 +21,12 @@ public class ModEntity {
                             .sized(0.8f, 1.8f)
                             .build(new ResourceLocation(PainMod.MOD_ID, "thief").toString())
             );
+
+    public static RegistryObject<EntityType<Rocket>> ROCKET =
+            ENTITY_REGISTRY.register("rocket",
+                    () -> EntityType.Builder.of(Rocket::new, MobCategory.MISC)
+                            .sized(0.4f, 0.4f)
+                            .build(new ResourceLocation(PainMod.MOD_ID, "rocket").toString()));
 
     public static void register(IEventBus eventbus){
         ENTITY_REGISTRY.register(eventbus);

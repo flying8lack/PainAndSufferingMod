@@ -1,6 +1,7 @@
 package com.flying_8lack.painmod;
 
 
+import com.flying_8lack.painmod.Entity.Client.RocketRenderer;
 import com.flying_8lack.painmod.Entity.Client.ThiefRenderer;
 import com.flying_8lack.painmod.network.ModMessages;
 import com.flying_8lack.painmod.overlay.CustomOverlay;
@@ -66,6 +67,8 @@ public class PainMod
                 //RenderType.translucent());
         OverlayRegistry.registerOverlayTop("PainPoints",CustomOverlay.POINTS);
         EntityRenderers.register(ModEntity.THIEF.get(), ThiefRenderer::new);
+        EntityRenderers.register(ModEntity.ROCKET.get(), RocketRenderer::new);
+
 
 
 
