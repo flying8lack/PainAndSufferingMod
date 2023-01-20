@@ -50,6 +50,8 @@ public class loveFangItem extends Item implements IForgeItem {
             return super.onLeftClickEntity(stack, player, entity);
         }
 
+
+
     }
 
 

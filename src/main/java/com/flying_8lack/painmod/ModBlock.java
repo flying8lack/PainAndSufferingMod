@@ -1,5 +1,6 @@
 package com.flying_8lack.painmod;
 
+import com.flying_8lack.painmod.blocks.bigHouseBlock;
 import com.flying_8lack.painmod.blocks.healingBlock;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
@@ -21,6 +22,10 @@ public class ModBlock {
     public static final RegistryObject<Block> HEAL_BLOCK = registerBlock("healblock",
             () -> new healingBlock(BlockBehaviour.Properties.of(Material.SHULKER_SHELL).noOcclusion())
                     , ModCreativeTab.PAIN_TAB);
+
+    public static final RegistryObject<Block> BIG_HOUSE_BLOCK = registerBlock(
+            "big_house_block", () -> new bigHouseBlock(
+                    BlockBehaviour.Properties.of(Material.SHULKER_SHELL)),ModCreativeTab.PAIN_TAB);
 
 
 
