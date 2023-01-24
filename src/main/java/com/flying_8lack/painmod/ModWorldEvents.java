@@ -97,29 +97,7 @@ public class ModWorldEvents {
         event.register(PainCapability.class);
         event.register(ThiefCapability.class);
     }
-    @SubscribeEvent
-    public static void onSleepEvent(PlayerWakeUpEvent event){
 
-
-
-        int X = (int)Math.floor(event.getPlayer().getLevel().random.nextGaussian() * 32)
-                + event.getPlayer().getBlockX();
-        int Z = (int)Math.floor(event.getPlayer().getLevel().random.nextGaussian() * 32)
-                + event.getPlayer().getBlockZ();
-        int Y = event.getPlayer().getLevel().getHeight(Heightmap.Types.WORLD_SURFACE,
-                X, Z);
-        //event.getPlayer().getLevel().playLocalSound(X, event.getPlayer().getY(), Z, SoundEvents.ENDERMAN_STARE,
-        //                    SoundSource.MASTER, 6.0f, 0.9f, false);
-        if(event.getPlayer().getLevel().random.nextInt(10) <= 2) {
-            event.getPlayer().teleportTo(X, Y, Z);
-        }
-
-
-
-        //event.getPlayer().stopSleeping();
-
-
-    }
 
 
 

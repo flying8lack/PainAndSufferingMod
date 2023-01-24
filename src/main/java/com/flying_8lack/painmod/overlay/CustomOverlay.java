@@ -16,7 +16,7 @@ public class CustomOverlay {
 
         String display = String.format("Pain Points: %d",
                 ClientPainData.getPainPoint());
-        gui.getFont().draw(poseStack, display, 10, 40, 0xf50707);
+        gui.getFont().draw(poseStack, display, (float) (width/2), (float) (height*0.75), 0xf50707);
 
     });
 }
