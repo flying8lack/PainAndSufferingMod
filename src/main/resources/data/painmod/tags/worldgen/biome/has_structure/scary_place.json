@@ -6,7 +6,6 @@
     "#minecraft:is_mountain",
     "minecraft:swamp",
     "minecraft:plains",
-    "minecraft:forest",
-    "#minecraft:is_beach"
+    "minecraft:forest"
   ]
 }
