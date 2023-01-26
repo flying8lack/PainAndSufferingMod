@@ -13,7 +13,6 @@ import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.RangedAttackGoal;
 import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
-import net.minecraft.world.entity.animal.Cow;
 import net.minecraft.world.entity.animal.IronGolem;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.Monster;
@@ -21,11 +20,18 @@ import net.minecraft.world.entity.monster.RangedAttackMob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib3.util.GeckoLibUtil;
 
 
-public class AlienEntity extends Monster implements RangedAttackMob {
+public class AlienEntity extends Monster implements RangedAttackMob, IAnimatable {
 
-
+    public AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
     public static AttributeSupplier setAttributes(){
         return Monster.createMonsterAttributes()
@@ -46,15 +52,16 @@ public class AlienEntity extends Monster implements RangedAttackMob {
     @Override
     public void aiStep() {
 
-        if(this.getTarget() == null && this.getHealth() < this.getMaxHealth()){
-            this.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 40, 0));
+        if(this.getTarget() == null){
+            this.addEffect(new MobEffectInstance(MobEffects.INVISIBILITY, 20, 1, false,false));
 
         }
 
         super.aiStep();
     }
 
-    protected AlienEntity(EntityType<? extends Monster> pEntityType, Level pLevel) {
+    public AlienEntity(EntityType<? extends Monster> pEntityType, Level pLevel) {
+
         super(pEntityType, pLevel);
     }
 
@@ -68,7 +75,6 @@ public class AlienEntity extends Monster implements RangedAttackMob {
 
 
         this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, true));
-        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Cow.class, true));
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, IronGolem.class, true));
     }
 
@@ -86,5 +92,29 @@ public class AlienEntity extends Monster implements RangedAttackMob {
             p.getLevel().addFreshEntity(r);
         }
 
+    }
+
+    public <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event){
+
+
+
+        return PlayState.STOP;
+
+
+
+
+
+    }
+
+
+    @Override
+    public void registerControllers(AnimationData data) {
+        data.addAnimationController(new AnimationController(this, "attackController",
+                0, this::predicate));
+    }
+
+    @Override
+    public AnimationFactory getFactory() {
+        return this.factory;
     }
 }

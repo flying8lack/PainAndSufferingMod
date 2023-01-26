@@ -15,7 +15,7 @@
   "biomes": "#painmod:has_structure/scary_place",
 
   // If true, land will be add around the bottom of the structure. (Based on the starting piece's y value)
-  "adapt_noise": true,
+  "adapt_noise": false,
 
   // What mobs can spawn over time in the structure.
   // Make sure you add the mob to the right category (monster, creature, etc)
@@ -24,10 +24,10 @@
       "bounding_box": "piece",
       "spawns": [
         {
-          "type": "minecraft:blaze",
-          "weight": 2,
+          "type": "minecraft:zombie",
+          "weight": 10,
           "minCount": 2,
-          "maxCount": 3
+          "maxCount": 6
         },
         {
           "type": "minecraft:wither_skeleton",

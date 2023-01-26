@@ -1,5 +1,6 @@
 package com.flying_8lack.painmod;
 
+import com.flying_8lack.painmod.Entity.AlienEntity;
 import com.flying_8lack.painmod.Entity.Rocket;
 import com.flying_8lack.painmod.Entity.ThiefEntity;
 import net.minecraft.resources.ResourceLocation;
@@ -20,6 +21,13 @@ public class ModEntity {
                     () -> EntityType.Builder.of(ThiefEntity::new, MobCategory.MONSTER)
                             .sized(0.8f, 1.8f)
                             .build(new ResourceLocation(PainMod.MOD_ID, "thief").toString())
+            );
+
+    public static RegistryObject<EntityType<AlienEntity>> ALIEN =
+            ENTITY_REGISTRY.register("alien",
+                    () -> EntityType.Builder.of(AlienEntity::new, MobCategory.MONSTER)
+                            .sized(0.8f, 1.8f)
+                            .build(new ResourceLocation(PainMod.MOD_ID, "alien").toString())
             );
 
     public static RegistryObject<EntityType<Rocket>> ROCKET =

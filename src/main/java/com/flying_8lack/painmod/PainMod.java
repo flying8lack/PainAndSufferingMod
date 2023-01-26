@@ -1,6 +1,7 @@
 package com.flying_8lack.painmod;
 
 
+import com.flying_8lack.painmod.Entity.Client.AlienRenderer;
 import com.flying_8lack.painmod.Entity.Client.RocketRenderer;
 import com.flying_8lack.painmod.Entity.Client.ThiefRenderer;
 import com.flying_8lack.painmod.Entity.ThiefEntity;
@@ -8,7 +9,6 @@ import com.flying_8lack.painmod.network.ModMessages;
 import com.flying_8lack.painmod.overlay.CustomOverlay;
 import com.flying_8lack.painmod.worldgen.ModStructures;
 import com.mojang.logging.LogUtils;
-import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.level.levelgen.Heightmap;
@@ -76,6 +76,7 @@ public class PainMod
         OverlayRegistry.registerOverlayTop("PainPoints",CustomOverlay.POINTS);
         EntityRenderers.register(ModEntity.THIEF.get(), ThiefRenderer::new);
         EntityRenderers.register(ModEntity.ROCKET.get(), RocketRenderer::new);
+        EntityRenderers.register(ModEntity.ALIEN.get(), AlienRenderer::new);
 
 
 

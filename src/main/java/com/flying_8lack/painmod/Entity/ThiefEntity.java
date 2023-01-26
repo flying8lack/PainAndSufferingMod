@@ -136,7 +136,7 @@ public class ThiefEntity extends Monster implements IAnimatable {
 
                 if(m.stealItem(((Player) pEntity).getItemInHand(InteractionHand.MAIN_HAND).copy())){
                     ((Player) pEntity).getItemInHand(InteractionHand.MAIN_HAND).setCount(0);
-                    pEntity.sendMessage(new TextComponent("I took your item"),
+                    pEntity.sendMessage(new TextComponent("I took your item, noob."),
                             pEntity.getUUID());
                 }
 
@@ -301,7 +301,12 @@ public class ThiefEntity extends Monster implements IAnimatable {
 
 
     public static <T extends Monster> boolean SpawnPlacement(EntityType<T> tEntityType, ServerLevelAccessor serverLevelAccessor, MobSpawnType mobSpawnType, BlockPos blockPos, Random random) {
-            return checkMonsterSpawnRules(tEntityType, serverLevelAccessor, mobSpawnType, blockPos, random) && blockPos.getY() > 40;
+        if(serverLevelAccessor.hasNearbyAlivePlayer(blockPos.getX(),
+                blockPos.getY(),
+                blockPos.getZ(), 80)) {
+            return checkMobSpawnRules(tEntityType, serverLevelAccessor, mobSpawnType, blockPos, random);
+        }
 
+        return false;
     }
 }

@@ -1,5 +1,6 @@
 package com.flying_8lack.painmod;
 
+import com.flying_8lack.painmod.Entity.AlienEntity;
 import com.flying_8lack.painmod.Entity.ThiefEntity;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -11,5 +12,6 @@ public class ModEventBus {
     @SubscribeEvent
     public static void entityAttributesEvent(EntityAttributeCreationEvent event){
         event.put(ModEntity.THIEF.get(), ThiefEntity.setAttributes());
+        event.put(ModEntity.ALIEN.get(), AlienEntity.setAttributes());
     }
 }

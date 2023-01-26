@@ -1,6 +1,7 @@
 package com.flying_8lack.painmod.Entity;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -27,7 +28,7 @@ public class Rocket extends Projectile implements IAnimatable {
     private BlockPos pos = BlockPos.ZERO;
     private final int max_time = 200;
     private int life_time = 0;
-    private final float SPEED = 2.0f;
+    private final float SPEED = 1.0f;
     private float current_speed = SPEED;
 
     public Rocket(EntityType<? extends Projectile> pEntityType, Level pLevel) {
@@ -51,7 +52,7 @@ public class Rocket extends Projectile implements IAnimatable {
 
     public void Explode(){
         this.getLevel().explode(this,
-                this.getX(), this.getY(), this.getZ(), 5.0f,
+                this.getX(), this.getY(), this.getZ(), 4.5f,
                 true, Explosion.BlockInteraction.DESTROY);
 
 
@@ -59,17 +60,6 @@ public class Rocket extends Projectile implements IAnimatable {
         this.discard();
     }
 
-    public static float lerpR(float pCurrentRotation, float pTargetRotation) {
-        while(pTargetRotation - pCurrentRotation < -180.0F) {
-            pCurrentRotation -= 360.0F;
-        }
-
-        while(pTargetRotation - pCurrentRotation >= 180.0F) {
-            pCurrentRotation += 360.0F;
-        }
-
-        return Mth.lerp(0.95F, pCurrentRotation, pTargetRotation);
-    }
 
 
     @Override
@@ -105,6 +95,8 @@ public class Rocket extends Projectile implements IAnimatable {
         }
     }
 
+
+
     @Override
     public void tick() {
         //super.tick();
@@ -121,16 +113,16 @@ public class Rocket extends Projectile implements IAnimatable {
                 direction.z) * 180.0/Mth.PI);*/
 
 
-        current_speed *= 1.1; //reduce the speed by 1% every tick
+        current_speed *= 1.01; //increase the speed by 1% every tick
 
 
 
         this.setDeltaMovement(
                 direction);
 
-        if(!this.isNoGravity()){
-            this.setDeltaMovement(this.getDeltaMovement().add(0, -0.05, 0));
-        }
+        //if(!this.isNoGravity()){
+            //this.setDeltaMovement(this.getDeltaMovement().add(0, -0.05, 0));
+        //}
         rotateTowardsMovement(this, 0.2f);
         //this.move(MoverType.SELF, this.getDeltaMovement());
         this.move(MoverType.SELF, this.getDeltaMovement().scale(this.current_speed/20));
