@@ -33,7 +33,8 @@ public class ModEntity {
     public static RegistryObject<EntityType<Rocket>> ROCKET =
             ENTITY_REGISTRY.register("rocket",
                     () -> EntityType.Builder.of(Rocket::new, MobCategory.MISC)
-                            .sized(0.4f, 0.4f)
+                            .sized(0.2f, 0.2f)
+                            .fireImmune()
                             .build(new ResourceLocation(PainMod.MOD_ID, "rocket").toString()));
 
     public static void register(IEventBus eventbus){

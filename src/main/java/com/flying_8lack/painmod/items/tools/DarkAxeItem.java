@@ -29,30 +29,33 @@ public class DarkAxeItem extends AxeItem {
 
 
         AtomicBoolean f = new AtomicBoolean(false);
-        //Apply special damage to entity if its health is bigger than player's health
+        //Apply special damage to entity if 40% of its health is larger than one
         //otherwise, apply normal action
         if(!player.getLevel().isClientSide()) {
             if (entity instanceof LivingEntity) {
                 player.getCapability(PainCapabilityProvider.PAIN).ifPresent(m -> {
 
-                    if(m.canAfford(20)) {
+                    if(m.canAfford(20) &&
+                    ((LivingEntity) entity).getHealth() * 0.4f > 1.0f) {
                         f.set(true);
 
                         entity.hurt(DamageSource.playerAttack(player),
                                 ((LivingEntity) entity).getHealth() * 0.4f);
-                        //Apply damage to entity equal to its 40% of health
+                        //Apply damage to entity equal to its 40% of current health
 
 
                         player.addEffect(new MobEffectInstance(
-                                MobEffects.MOVEMENT_SLOWDOWN, 120, 16, true, false
-                        )); //adds slowness to player for 6 seconds
+                                MobEffects.MOVEMENT_SLOWDOWN, 20, 16, true, false
+                        )); //adds slowness to player for 1 seconds
+
+                        m.subPainPoint(20);
 
                     } else {
                         f.set(false);
                     }
                 });
 
-                    return (f.get() ?  true : super.onLeftClickEntity(stack, player, entity));
+                    return (f.get() || super.onLeftClickEntity(stack, player, entity));
 
             }
         }

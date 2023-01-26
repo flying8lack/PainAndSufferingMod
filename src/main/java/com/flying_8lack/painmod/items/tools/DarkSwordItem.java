@@ -28,6 +28,7 @@ public class DarkSwordItem extends SwordItem {
                //pContext.getLevel().setBlock(pos, Blocks.MAGMA_BLOCK.defaultBlockState(), 2 | 1 | 8);
                 if(pContext.getLevel().getBlockState(pos).getBlock() != Blocks.AIR) {
                     pContext.getLevel().setBlockAndUpdate(pos, Blocks.MAGMA_BLOCK.defaultBlockState());
+
                 } else {
                     pContext.getLevel().setBlockAndUpdate(pos.below(), Blocks.MAGMA_BLOCK.defaultBlockState());
                 }

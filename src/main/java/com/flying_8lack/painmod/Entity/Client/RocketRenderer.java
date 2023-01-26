@@ -12,7 +12,10 @@ public class RocketRenderer extends GeoProjectilesRenderer<Rocket> {
     public RocketRenderer(EntityRendererProvider.Context renderManager) {
         super(renderManager, new RocketModel());
         this.shadowRadius = 0.2f;
+
     }
+
+
 
     @Override
     public ResourceLocation getTextureLocation(Rocket animatable) {
