@@ -69,7 +69,7 @@ public class AlienEntity extends Monster implements RangedAttackMob, IAnimatable
     protected void registerGoals() {
         //super.registerGoals();
         this.goalSelector.addGoal(1, new FloatGoal(this));
-        this.goalSelector.addGoal(2, new RangedAttackGoal(this, 1.0D, 15, 32));
+        this.goalSelector.addGoal(2, new RangedAttackGoal(this, 1.0D, 40, 32));
         this.goalSelector.addGoal(3, new LookAtPlayerGoal(this, Player.class, 20.0F));
         this.goalSelector.addGoal(4, new WaterAvoidingRandomStrollGoal(this, 1.0D));
 
@@ -81,13 +81,13 @@ public class AlienEntity extends Monster implements RangedAttackMob, IAnimatable
     @Override
     public void performRangedAttack(@NotNull LivingEntity p, float pVelocity) {
 
-        if(this.getTarget() != null && !this.getLevel().isClientSide()) {
+        if(this.getTarget() != null && this.getTarget().isAlive() && !this.getLevel().isClientSide()) {
             Rocket r = new Rocket(ModEntity.ROCKET.get(), p.getLevel());
             r.setTargetPos(new BlockPos(this.getTarget().getX(),
                     this.getTarget().getY(),
                     this.getTarget().getZ()));
             r.teleportTo(this.getLookAngle().x() + this.getX(),
-                    this.getLookAngle().y() + this.getY(),
+                    this.getLookAngle().y() + this.getY() + 1,
                     this.getLookAngle().z() + this.getZ());
             p.getLevel().addFreshEntity(r);
         }

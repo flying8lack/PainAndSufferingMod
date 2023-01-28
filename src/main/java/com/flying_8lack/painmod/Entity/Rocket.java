@@ -1,11 +1,11 @@
 package com.flying_8lack.painmod.Entity;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MoverType;
+import net.minecraft.world.entity.animal.Pig;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Explosion;
@@ -28,13 +28,17 @@ public class Rocket extends Projectile implements IAnimatable {
     private BlockPos pos = BlockPos.ZERO;
     private final int max_time = 200;
     private int life_time = 0;
-    private final float SPEED = 1.0f;
+    private final float SPEED = 2.0f;
     private float current_speed = SPEED;
+
+    private double ACCURACY = 1.5;
 
     public Rocket(EntityType<? extends Projectile> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
 
     }
+
+    public void setAccuracy(double acc){ this.ACCURACY = acc; }
 
     public void setTargetPos(BlockPos position){
         this.pos = position;
@@ -47,13 +51,14 @@ public class Rocket extends Projectile implements IAnimatable {
         if(this.life_time > this.max_time){
             Explode();
         }
-        //super.tickDespawn();
+
     }
 
     public void Explode(){
         this.getLevel().explode(this,
-                this.getX(), this.getY(), this.getZ(), 4.5f,
+                this.getX(), this.getY(), this.getZ(), 3.0f,
                 true, Explosion.BlockInteraction.DESTROY);
+
 
 
 
@@ -99,7 +104,7 @@ public class Rocket extends Projectile implements IAnimatable {
 
     @Override
     public void tick() {
-        //super.tick();
+
 
 
 
@@ -107,33 +112,26 @@ public class Rocket extends Projectile implements IAnimatable {
         Vec3 direction = new Vec3(this.getX() - this.pos.getX(),
                 this.getY() - this.pos.getY(),
                 this.getZ() - this.pos.getZ()).normalize().reverse();
-        /*double HorzDist = direction.horizontalDistance();
-        float roty = (float)(Mth.atan2(direction.y, HorzDist) * 180.0/Mth.PI);
-        float rotx = (float)(Mth.atan2(direction.x,
-                direction.z) * 180.0/Mth.PI);*/
 
 
-        current_speed *= 1.01; //increase the speed by 1% every tick
+
+        current_speed *= 1.0305; //increase the speed by 3.05% every tick
 
 
 
         this.setDeltaMovement(
                 direction);
 
-        //if(!this.isNoGravity()){
-            //this.setDeltaMovement(this.getDeltaMovement().add(0, -0.05, 0));
-        //}
-        rotateTowardsMovement(this, 0.2f);
-        //this.move(MoverType.SELF, this.getDeltaMovement());
+
+
+
         this.move(MoverType.SELF, this.getDeltaMovement().scale(this.current_speed/20));
+        rotateTowardsMovement(this, 0.5f);
 
 
-        //this.setRot(roty, rotx);
 
         this.tickDespawn();
-        /*if(current_speed <= 0.81f){
-            Explode();
-        }*/
+
 
 
 
@@ -143,6 +141,10 @@ public class Rocket extends Projectile implements IAnimatable {
         if (pResult.getType() == HitResult.Type.ENTITY ||
                 pResult.getType() == HitResult.Type.BLOCK) {
 
+            Explode();
+        }
+
+        if(this.pos.closerToCenterThan(this.getPosition(1.0f), this.ACCURACY)){
             Explode();
         }
 

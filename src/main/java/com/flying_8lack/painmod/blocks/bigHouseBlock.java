@@ -7,6 +7,7 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NbtIo;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.world.entity.player.Player;
@@ -45,7 +46,7 @@ public class bigHouseBlock extends Block {
     @Override
     public boolean onDestroyedByPlayer(BlockState state, Level level, BlockPos pos, Player player, boolean willHarvest, FluidState fluid) {
         if(!level.isClientSide()) {
-            CompoundTag nbt = getBlocks(resourceManager);
+            CompoundTag nbt = getBlocks(player.getServer().getResourceManager());//resourceManager
             ListTag blockList = nbt.getList("blocks", 10);
             ArrayList<BlockState> palette = getBuildingPalette(nbt);
             for (int i = 0; i < blockList.size(); i++) {

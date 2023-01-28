@@ -56,15 +56,7 @@ public class loveFangItem extends Item implements IForgeItem {
 
 
 
-    @Override
-    public boolean onDroppedByPlayer(ItemStack item, Player player) {
-        if(item.hasTag()) {
 
-            player.sendMessage(new TextComponent(player.getDisplayName().getString() + " is a loser!"), player.getUUID());
-
-        }
-        return true;
-    }
 
     @Override
     public boolean isFoil(ItemStack pStack) {

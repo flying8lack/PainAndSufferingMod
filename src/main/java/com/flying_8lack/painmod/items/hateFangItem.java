@@ -1,5 +1,6 @@
 package com.flying_8lack.painmod.items;
 
+import com.flying_8lack.painmod.util.capabilities.PainCapabilityProvider;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -33,55 +34,51 @@ public class hateFangItem extends Item implements IForgeItem {
     @Override
     public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> tooltip, TooltipFlag pIsAdvanced) {
         super.appendHoverText(pStack, pLevel, tooltip, pIsAdvanced);
-        String mama = "A powerful fang to bond to the hated one. "+
-                "Left click (attack) using the fang to connect to the despised one. \n";
-        if(pStack.hasTag()){
-            mama = mama + ChatFormatting.RED + "The fang is connected and the hate rose. ";
-        }
+        String mama = "A powerful fang that on use apply damage (20 Hp) to all entities" +
+                " within 32 blocks radius.\nThe user recieve have half the damage dealt." +
+                ChatFormatting.AQUA +
+                "\n\nConsume 40 pain credits per use";
+
 
 
         tooltip.add(new TextComponent(mama));
     }
 
-    @Override
-    public boolean onLeftClickEntity(ItemStack stack, Player player, Entity entity) {
-        if(entity instanceof LivingEntity) {
-            CompoundTag BondData = new CompoundTag();
-            BondData.putInt("Bond", entity.getId());
-            stack.setTag(BondData);
 
-
-        }
-
-        return super.onLeftClickEntity(stack, player, entity);
-    }
 
 
     @Override
     public InteractionResultHolder<ItemStack> use(Level pLevel, Player User, InteractionHand pUsedHand) {
-        if(!pLevel.isClientSide()) {
 
-            List<Entity> M = pLevel.getEntitiesOfClass( Entity.class,
-                    new AABB(User.getX()-10,User.getY()-10,User.getZ()-10
-                    ,User.getX()+10,User.getY()+10,User.getZ()+10),
-                    EntitySelector.LIVING_ENTITY_STILL_ALIVE);
-            for (Entity i : M) {
-                if (i instanceof LivingEntity && !(i instanceof Player)) {
+        User.getCapability(PainCapabilityProvider.PAIN).ifPresent(m ->{
+            if(m.canAfford(40)) {
+                m.subPainPoint(40);
 
 
-                    i.hurt(DamageSource.playerAttack(User), 20.0f);
+                if (!pLevel.isClientSide()) {
 
 
+                    List<Entity> M = pLevel.getEntitiesOfClass(Entity.class,
+                            new AABB(User.getX() - 32, User.getY() - 10, User.getZ() - 32
+                                    , User.getX() + 32, User.getY() + 10, User.getZ() + 32),
+                            EntitySelector.LIVING_ENTITY_STILL_ALIVE);
+
+                    for (Entity i : M) {
+                        if (i instanceof LivingEntity && !(i instanceof Player)) {
 
 
+                            i.hurt(DamageSource.playerAttack(User),
+                                    20.0f);
 
 
+                        }
+
+                    }
                 }
+                User.hurt(DamageSource.MAGIC, 10.0f);
 
             }
-        }
-        User.hurt(DamageSource.MAGIC,5.0f);
-
+        });
         return super.use(pLevel, User, pUsedHand);
     }
 }

@@ -64,15 +64,7 @@ public class ModWorldEvents {
 
 
 
-    @SubscribeEvent
-    public static void onPlayerAttackEntity(AttackEntityEvent event){
-        if(event.getTarget().isAlive() &&
-                (event.getPlayer().distanceTo(event.getTarget()) <= 8)) {
-            event.getPlayer().getCapability(PainCapabilityProvider.PAIN).ifPresent(m -> {
-                m.addPainPoint(10);
-            });
-        }
-    }
+
 
 
 
