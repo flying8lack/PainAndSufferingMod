@@ -3,9 +3,9 @@
   "biomes": "#minecraft:is_overworld",
   "spawners": {
     "type": "painmod:thief",
-    "weight": 50,
-    "minCount": 1,
-    "maxCount": 3
+    "weight": 90,
+    "minCount": 4,
+    "maxCount": 7
 
   }
 }
