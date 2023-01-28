@@ -51,7 +51,7 @@ public class ModItem {
                     new Item.Properties().tab(CreativeModeTab.TAB_MISC)));
 
     public static final RegistryObject<Item> ALIEN_SPAWN_EGG = ITEMS.register("alien_spawn_egg",
-            () -> new ForgeSpawnEggItem(ModEntity.ALIEN,0xe3e3e3, 0x030303,
+            () -> new ForgeSpawnEggItem(ModEntity.ALIEN,0x85f558, 0x034025,
                     new Item.Properties().tab(CreativeModeTab.TAB_MISC)));
 
     public static void register(IEventBus eventbus){
