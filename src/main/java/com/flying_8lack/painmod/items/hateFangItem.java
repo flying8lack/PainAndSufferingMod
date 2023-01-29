@@ -25,7 +25,7 @@ import java.util.List;
 public class hateFangItem extends Item implements IForgeItem {
     public hateFangItem(Properties pProperties) {
         super(pProperties);
-
+        pProperties.stacksTo(1);
 
     }
 

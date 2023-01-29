@@ -23,9 +23,6 @@ public class ModBlock {
             () -> new healingBlock(BlockBehaviour.Properties.of(Material.SHULKER_SHELL).noOcclusion())
                     , ModCreativeTab.PAIN_TAB);
 
-    public static final RegistryObject<Block> BIG_HOUSE_BLOCK = registerBlock(
-            "big_house_block", () -> new bigHouseBlock(
-                    BlockBehaviour.Properties.of(Material.SHULKER_SHELL)),ModCreativeTab.PAIN_TAB);
 
 
 
