@@ -5,10 +5,13 @@ import com.flying_8lack.painmod.Entity.Client.AlienRenderer;
 import com.flying_8lack.painmod.Entity.Client.RocketRenderer;
 import com.flying_8lack.painmod.Entity.Client.ThiefRenderer;
 import com.flying_8lack.painmod.Entity.ThiefEntity;
+import com.flying_8lack.painmod.gui.ModMenuType;
+import com.flying_8lack.painmod.gui.tradingBlockScreen;
 import com.flying_8lack.painmod.network.ModMessages;
 import com.flying_8lack.painmod.overlay.CustomOverlay;
 import com.flying_8lack.painmod.worldgen.ModStructures;
 import com.mojang.logging.LogUtils;
+import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.level.levelgen.Heightmap;
@@ -40,6 +43,7 @@ public class PainMod
         ModBlockEntity.register(eventbus);
         ModStructures.register(eventbus);
         ModEntity.register(eventbus);
+        ModMenuType.register(eventbus);
 
         eventbus.addListener(this::setup);
         eventbus.addListener(this::setupClient);
@@ -77,6 +81,8 @@ public class PainMod
         EntityRenderers.register(ModEntity.THIEF.get(), ThiefRenderer::new);
         EntityRenderers.register(ModEntity.ROCKET.get(), RocketRenderer::new);
         EntityRenderers.register(ModEntity.ALIEN.get(), AlienRenderer::new);
+        MenuScreens.register(ModMenuType.TRADING_MENU.get(), tradingBlockScreen::new);
+
 
 
 

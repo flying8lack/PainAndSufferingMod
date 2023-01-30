@@ -42,10 +42,8 @@ public class ModItem {
 
     public static final RegistryObject<Item> LOVE_FANG = ITEMS.register("love_fang",
             () -> new loveFangItem(new Item.Properties().tab(ModCreativeTab.PAIN_TAB)));
-
     public static final RegistryObject<Item> HATE_FANG = ITEMS.register("hate_fang",
             () -> new hateFangItem(new Item.Properties().tab(ModCreativeTab.PAIN_TAB)));
-
     public static final RegistryObject<Item> THIEF_SPAWN_EGG = ITEMS.register("thief_spawn_egg",
             () -> new ForgeSpawnEggItem(ModEntity.THIEF,0xe3e3e3, 0x030303,
                     new Item.Properties().tab(CreativeModeTab.TAB_MISC)));

@@ -19,4 +19,8 @@ public class CustomOverlay {
         gui.getFont().draw(poseStack, display, (float) (width/2), (float) (height*0.75), 0xf50707);
 
     });
+
+    public static final IIngameOverlay MAJIMA_TITLE = ((gui, poseStack, partialTick, width, height) -> {
+
+    });
 }

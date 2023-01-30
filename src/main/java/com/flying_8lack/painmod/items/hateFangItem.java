@@ -25,7 +25,7 @@ import java.util.List;
 public class hateFangItem extends Item implements IForgeItem {
     public hateFangItem(Properties pProperties) {
         super(pProperties);
-        pProperties.stacksTo(1);
+        pProperties.stacksTo(64);
 
     }
 
@@ -76,6 +76,7 @@ public class hateFangItem extends Item implements IForgeItem {
                     }
                 }
                 User.hurt(DamageSource.MAGIC, 10.0f);
+                User.getItemInHand(pUsedHand).setCount(User.getItemInHand(pUsedHand).getCount() - 1);
 
             }
         });

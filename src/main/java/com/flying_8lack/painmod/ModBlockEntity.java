@@ -1,6 +1,7 @@
 package com.flying_8lack.painmod;
 
 import com.flying_8lack.painmod.blocks.entity.healingBlockEntity;
+import com.flying_8lack.painmod.blocks.entity.tradingBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
@@ -16,6 +17,11 @@ public class ModBlockEntity {
             BLOCK_ENTITIES.register("healing_block_entity",
                     () -> BlockEntityType.Builder.of(healingBlockEntity::new,
                             ModBlock.HEAL_BLOCK.get()).build(null));
+
+    public static final RegistryObject<BlockEntityType<tradingBlockEntity>> TRADING_BLOCK =
+            BLOCK_ENTITIES.register("trading_block_entity",
+                    () -> BlockEntityType.Builder.of(tradingBlockEntity::new,
+                            ModBlock.TRADE_BLOCK.get()).build(null));
 
     public static void register(IEventBus eventbus){
         BLOCK_ENTITIES.register(eventbus);

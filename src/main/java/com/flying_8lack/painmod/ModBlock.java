@@ -23,6 +23,10 @@ public class ModBlock {
             () -> new healingBlock(BlockBehaviour.Properties.of(Material.SHULKER_SHELL).noOcclusion())
                     , ModCreativeTab.PAIN_TAB);
 
+    public static final RegistryObject<Block> TRADE_BLOCK = registerBlock("trading_block",
+            () -> new healingBlock(BlockBehaviour.Properties.of(Material.SHULKER_SHELL).noOcclusion())
+            , ModCreativeTab.PAIN_TAB);
+
 
 
 
